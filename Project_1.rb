@@ -59,6 +59,7 @@ end
 class Library
   def initialize
     @book_list = []
+    @member_list = []
   end
 
   def add_book(book)
@@ -187,6 +188,23 @@ class Library
     else
       puts "No overdue books found."
     end
+  end
+
+  def add_member(member)
+    @member_list << member
+  end
+
+  def find_member(member_id)
+    @member_list.find { |member| member.member_id == member_id }
+  end
+
+  def remove_member(member_id)
+    member = find_member(member_id)
+    @member_list.delete(member)
+  end
+
+  def list_members
+    @member_list
   end
 end
 
