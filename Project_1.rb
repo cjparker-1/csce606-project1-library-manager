@@ -191,95 +191,97 @@ class Library
 end
 
 
-library = Library.new
+if __FILE__ == $0
+  library = Library.new
 
 
-while true
-  puts
-  puts "Welcome To Library:"
-  puts "1 - Add a book"
-  puts "2 - Remove a book"
-  puts "3 - View all books"
-  puts "4 - Search for a book"
-  puts "5 - Borrow a book"
-  puts "6 - Return a book"
-  puts "7 - Sort books by title"
-  puts "8 - Filter books by genre"
-  puts "9 - Track overdue books"
-  puts "10 - Exit"
+  while true
+    puts
+    puts "Welcome To Library:"
+    puts "1 - Add a book"
+    puts "2 - Remove a book"
+    puts "3 - View all books"
+    puts "4 - Search for a book"
+    puts "5 - Borrow a book"
+    puts "6 - Return a book"
+    puts "7 - Sort books by title"
+    puts "8 - Filter books by genre"
+    puts "9 - Track overdue books"
+    puts "10 - Exit"
 
-  print "Enter your choice: "
-  response = gets.chomp
+    print "Enter your choice: "
+    response = gets.chomp
 
-  if response == "1"
-    print "Enter Book Title: "
-    title = gets.chomp
+    if response == "1"
+      print "Enter Book Title: "
+      title = gets.chomp
 
-    print "Enter Book ID: "
-    book_id = gets.chomp
+      print "Enter Book ID: "
+      book_id = gets.chomp
 
-    print "Enter Author Name: "
-    author = gets.chomp
+      print "Enter Author Name: "
+      author = gets.chomp
 
-    print "Enter Book Genre: "
-    genre = gets.chomp
+      print "Enter Book Genre: "
+      genre = gets.chomp
 
-    book = Book.new(title, book_id, author, genre)
-    library.add_book(book)
+      book = Book.new(title, book_id, author, genre)
+      library.add_book(book)
 
-  elsif response == "2"
-    print "Enter Book ID: "
-    book_id = gets.chomp
+    elsif response == "2"
+      print "Enter Book ID: "
+      book_id = gets.chomp
 
-    library.remove_book(book_id)
+      library.remove_book(book_id)
 
-  elsif response == "3"
-    library.display_books
+    elsif response == "3"
+      library.display_books
 
-  elsif response == "4"
-    print "Enter Book Title: "
-    title = gets.chomp
+    elsif response == "4"
+      print "Enter Book Title: "
+      title = gets.chomp
 
-    library.search_book(title)
+      library.search_book(title)
 
-  elsif response == "5"
-    print "Enter Book ID: "
-    book_id = gets.chomp
+    elsif response == "5"
+      print "Enter Book ID: "
+      book_id = gets.chomp
 
-    print "Please Enter Borrower Name: "
-    borrower_name = gets.chomp
+      print "Please Enter Borrower Name: "
+      borrower_name = gets.chomp
 
-    print "Please Enter Return Date: "
-    return_date = gets.chomp
+      print "Please Enter Return Date: "
+      return_date = gets.chomp
 
-    library.borrow_book(book_id, borrower_name, return_date)
+      library.borrow_book(book_id, borrower_name, return_date)
 
-  elsif response == "6"
-    print "Enter Book ID: "
-    book_id = gets.chomp
+    elsif response == "6"
+      print "Enter Book ID: "
+      book_id = gets.chomp
 
-    library.return_book(book_id)
+      library.return_book(book_id)
 
-  elsif response == "7"
-    library.sort_books_by_title
+    elsif response == "7"
+      library.sort_books_by_title
 
-  elsif response == "8"
-    print "Enter Book Genre for Filtering: "
-    filter_genre = gets.chomp
+    elsif response == "8"
+      print "Enter Book Genre for Filtering: "
+      filter_genre = gets.chomp
 
-    library.filter_books_by_genre(filter_genre)
+      library.filter_books_by_genre(filter_genre)
 
-  elsif response == "9"
-    print "Please Enter Current Date to Track Overdues: "
-    current_date = gets.chomp
+    elsif response == "9"
+      print "Please Enter Current Date to Track Overdues: "
+      current_date = gets.chomp
 
-    library.track_overdue_books(current_date)
+      library.track_overdue_books(current_date)
 
-  elsif response == "10"
-    puts "Thank you for visiting the Library!"
-    break
+    elsif response == "10"
+      puts "Thank you for visiting the Library!"
+      break
 
-  else
-    puts "Invalid choice!"
+    else
+      puts "Invalid choice!"
+    end
   end
 end
