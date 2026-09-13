@@ -29,26 +29,11 @@ These are nice to have. We will keep them if they work and do not get in the way
 - Overdue tracking
 - Book categories (genre filter)
 
-Can already added first versions of these in the original Library class. They may still need cleanup and tests.
+First versions of these already exist in the original Library class. They may still need cleanup and tests.
 
 ## How we are splitting the work
 
-Can:
-- Built the original `Book` class and `Library` class
-- Built the command-line menu
-- Built the main book features: add, remove, view, search, borrow, return, sort, filter, overdue
-
-Christopher:
-- `LibraryMember` class
-- Member management in `Library` (add, find, remove, list)
-- Member validation and error handling (planned)
-- Test setup and tests
-- Required documentation (user stories, planning, design, backlog, retrospective, README)
-
-Both:
-- Review each other's work
-- Help with any remaining project requirements
-- Fix bugs found while testing
+We are splitting the project between individual tasks and shared review. Each team member will work on features, tests, and documentation. We will review each other's work and help with remaining tasks before submission.
 
 ## How we work
 
