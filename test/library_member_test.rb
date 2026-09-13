@@ -32,4 +32,28 @@ class LibraryMemberTest < Minitest::Test
     assert_nil result
     assert_equal [], @member.borrowed_books
   end
+
+  def test_blank_member_id_is_rejected
+    error = assert_raises(ArgumentError) { LibraryMember.new("", "Alice") }
+
+    assert_equal "Member ID cannot be blank", error.message
+  end
+
+  def test_whitespace_member_id_is_rejected
+    assert_raises(ArgumentError) { LibraryMember.new("   ", "Alice") }
+  end
+
+  def test_nil_member_id_is_rejected
+    assert_raises(ArgumentError) { LibraryMember.new(nil, "Alice") }
+  end
+
+  def test_blank_name_is_rejected
+    error = assert_raises(ArgumentError) { LibraryMember.new("M1", "") }
+
+    assert_equal "Member name cannot be blank", error.message
+  end
+
+  def test_whitespace_name_is_rejected
+    assert_raises(ArgumentError) { LibraryMember.new("M1", "   ") }
+  end
 end

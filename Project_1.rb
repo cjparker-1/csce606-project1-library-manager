@@ -191,6 +191,10 @@ class Library
   end
 
   def add_member(member)
+    if find_member(member.member_id)
+      raise ArgumentError, "Member ID #{member.member_id} already exists"
+    end
+
     @member_list << member
   end
 

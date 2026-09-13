@@ -46,4 +46,14 @@ class LibraryMembersTest < Minitest::Test
     assert_nil result
     assert_equal [@alice], @library.list_members
   end
+
+  def test_duplicate_member_id_is_rejected
+    @library.add_member(@alice)
+    same_id = LibraryMember.new("M1", "Someone Else")
+
+    error = assert_raises(ArgumentError) { @library.add_member(same_id) }
+
+    assert_equal "Member ID M1 already exists", error.message
+    assert_equal [@alice], @library.list_members
+  end
 end
