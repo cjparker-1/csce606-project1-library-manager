@@ -3,11 +3,11 @@ require "open3"
 
 # Runs the real program with typed input and checks what it prints.
 class MemberMenuTest < Minitest::Test
-  PROGRAM = File.expand_path("../Project_1.rb", __dir__)
+  RUNNER = File.expand_path("run_with_coverage.rb", __dir__)
 
   def run_menu(*inputs)
     typed = (inputs + ["14"]).join("\n") + "\n"
-    output, _status = Open3.capture2("ruby", PROGRAM, stdin_data: typed)
+    output, _status = Open3.capture2("ruby", RUNNER, stdin_data: typed)
     output
   end
 

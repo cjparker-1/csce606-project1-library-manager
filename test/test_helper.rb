@@ -1,8 +1,5 @@
+# SimpleCov settings live in .simplecov at the project root.
 require "simplecov"
-
-SimpleCov.start do
-  add_filter "/test/"
-end
 
 require "minitest/autorun"
 
