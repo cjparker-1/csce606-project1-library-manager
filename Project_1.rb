@@ -22,7 +22,7 @@ class Book
       borrower_info = ""
     end
 
-    return "Title: #{@title}, ID: #{@book_id}, Author: #{@author}, Genre: #{@genre}, Status: #{status}#{borrower_info}"
+    "Title: #{@title}, ID: #{@book_id}, Author: #{@author}, Genre: #{@genre}, Status: #{status}#{borrower_info}"
   end
 
   def borrow_book(borrower_name, return_date)
@@ -57,7 +57,6 @@ class Book
   end
 end
 
-
 class Library
   def initialize
     @book_list = []
@@ -81,9 +80,7 @@ class Library
       end
     end
 
-    if !found
-      puts "Book with ID #{book_id} not found!"
-    end
+    puts "Book with ID #{book_id} not found!" unless found
   end
 
   def display_books
@@ -103,9 +100,7 @@ class Library
       end
     end
 
-    if !found
-      puts "Book with title '#{title}' not found!"
-    end
+    puts "Book with title '#{title}' not found!" unless found
   end
 
   def find_book(book_id)
@@ -142,9 +137,7 @@ class Library
   end
 
   def sort_books_by_title
-    @book_list.sort_by! do |book|
-      book.title
-    end
+    @book_list.sort_by!(&:title)
 
     puts "Books are sorted!"
 
@@ -157,12 +150,10 @@ class Library
     filtered_list = []
 
     for book in @book_list
-      if book.genre == genre
-        filtered_list << book
-      end
+      filtered_list << book if book.genre == genre
     end
 
-    if filtered_list.length > 0
+    if filtered_list.any?
       puts "Books in Genre: #{genre}"
 
       for book in filtered_list
@@ -177,12 +168,10 @@ class Library
     overdue_list = []
 
     for book in @book_list
-      if book.return_date != nil && book.return_date < current_date
-        overdue_list << book
-      end
+      overdue_list << book if book.return_date && book.return_date < current_date
     end
 
-    if overdue_list.length > 0
+    if overdue_list.any?
       puts "Overdue Books:"
 
       for book in overdue_list
@@ -194,9 +183,7 @@ class Library
   end
 
   def add_member(member)
-    if find_member(member.member_id)
-      raise ArgumentError, "Member ID #{member.member_id} already exists"
-    end
+    raise ArgumentError, "Member ID #{member.member_id} already exists" if find_member(member.member_id)
 
     @member_list << member
   end
@@ -215,10 +202,8 @@ class Library
   end
 end
 
-
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   library = Library.new
-
 
   while true
     puts
@@ -338,8 +323,8 @@ if __FILE__ == $0
       if members.empty?
         puts "No members found."
       else
-        members.each do |member|
-          puts "Member ID: #{member.member_id}, Name: #{member.name}"
+        members.each do |library_member|
+          puts "Member ID: #{library_member.member_id}, Name: #{library_member.name}"
         end
       end
 

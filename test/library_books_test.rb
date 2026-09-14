@@ -18,7 +18,9 @@ class LibraryBooksTest < Minitest::Test
     book = Book.new("Emma", "B3", "Jane Austen", "Classic")
     output, _err = capture_io { @library.add_book(book) }
 
-    assert_includes output, "Title: Emma, ID: B3, Author: Jane Austen, Genre: Classic, Status: Available added to System!"
+    expected = "Title: Emma, ID: B3, Author: Jane Austen, Genre: Classic, Status: Available added to System!"
+
+    assert_includes output, expected
     assert_equal book, @library.find_book("B3")
   end
 

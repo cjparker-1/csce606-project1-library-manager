@@ -6,7 +6,7 @@ class MemberMenuTest < Minitest::Test
   RUNNER = File.expand_path("run_with_coverage.rb", __dir__)
 
   def run_menu(*inputs)
-    typed = (inputs + ["14"]).join("\n") + "\n"
+    typed = (inputs + ["14"]).map { |line| "#{line}\n" }.join
     output, _status = Open3.capture2("ruby", RUNNER, stdin_data: typed)
     output
   end

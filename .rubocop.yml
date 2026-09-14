@@ -1,0 +1,54 @@
+AllCops:
+  TargetRubyVersion: 2.6
+  NewCops: enable
+  SuggestExtensions: false
+
+# The whole project uses double quotes.
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+# Not needed for a small student project.
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Class comments are not required in this project.
+Style/Documentation:
+  Enabled: false
+
+# Project_1.rb is the file name used in the assignment and README.
+Naming/FileName:
+  Exclude:
+    - "Project_1.rb"
+
+# The original code uses for loops, a while true menu loop, and an if/elsif menu.
+# We left that style in place instead of rewriting it.
+Style/For:
+  Enabled: false
+Style/Next:
+  Enabled: false
+Style/CaseLikeIf:
+  Enabled: false
+Style/InfiniteLoop:
+  Enabled: false
+Style/NegatedIfElseCondition:
+  Enabled: false
+
+# Book.new keeps its original 7 parameters, including is_borrowed = false.
+Metrics/ParameterLists:
+  Max: 7
+Style/OptionalBooleanParameter:
+  Enabled: false
+
+# Plain "if member" reads better than &. for this project.
+Style/SafeNavigation:
+  Enabled: false
+
+# Some original methods are a few lines over the default limits.
+Metrics/MethodLength:
+  Max: 15
+Metrics/ClassLength:
+  Max: 150
+
+# The menu code sits inside the run guard, which adds one level of nesting.
+Metrics/BlockNesting:
+  Max: 4
