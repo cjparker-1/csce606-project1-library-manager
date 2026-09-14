@@ -108,36 +108,37 @@ class Library
     end
   end
 
-  def borrow_book(book_id, borrower_name, return_date)
-    found = false
+  def find_book(book_id)
+    @book_list.find { |book| book.book_id == book_id }
+  end
 
-    for book in @book_list
-      if book.book_id == book_id
-        book.borrow_book(borrower_name, return_date)
-        found = true
-        break
-      end
-    end
+  def borrow_book(book_id, member_id, return_date)
+    member = find_member(member_id)
+    book = find_book(book_id)
 
-    if !found
+    if member.nil?
+      puts "Member with ID #{member_id} not found! Unable to borrow."
+    elsif book.nil?
       puts "Book with ID #{book_id} not found! Unable to borrow."
+    elsif book.is_borrowed
+      puts "Book is already taken out!"
+    else
+      book.borrow_book(member.name, return_date)
+      member.add_borrowed_book(book)
     end
   end
 
   def return_book(book_id)
-    found = false
+    book = find_book(book_id)
 
-    for book in @book_list
-      if book.book_id == book_id
-        book.return_book
-        found = true
-        break
-      end
-    end
-
-    if !found
+    if book.nil?
       puts "Book with ID #{book_id} not found! Unable to return."
+      return
     end
+
+    member = @member_list.find { |m| m.borrowed_books.include?(book) }
+    book.return_book
+    member.remove_borrowed_book(book) if member
   end
 
   def sort_books_by_title
@@ -275,13 +276,13 @@ if __FILE__ == $0
       print "Enter Book ID: "
       book_id = gets.chomp
 
-      print "Please Enter Borrower Name: "
-      borrower_name = gets.chomp
+      print "Enter Member ID: "
+      member_id = gets.chomp
 
       print "Please Enter Return Date: "
       return_date = gets.chomp
 
-      library.borrow_book(book_id, borrower_name, return_date)
+      library.borrow_book(book_id, member_id, return_date)
 
     elsif response == "6"
       print "Enter Book ID: "

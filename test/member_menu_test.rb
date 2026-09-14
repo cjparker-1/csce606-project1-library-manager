@@ -62,4 +62,22 @@ class MemberMenuTest < Minitest::Test
     assert_includes output, "Member ID M1 already exists"
     assert_includes output, "Thank you for visiting the Library!"
   end
+
+  def test_member_borrows_and_returns_book
+    output = run_menu("1", "Dune", "B1", "Frank Herbert", "Sci-Fi",
+                      "10", "M1", "Alice",
+                      "5", "B1", "M1", "2026-10-01",
+                      "6", "B1")
+
+    assert_includes output, "Book borrowed by Alice and return date is: 2026-10-01"
+    assert_includes output, "Book has been returned!"
+  end
+
+  def test_unknown_member_cannot_borrow
+    output = run_menu("1", "Dune", "B1", "Frank Herbert", "Sci-Fi",
+                      "5", "B1", "M9", "2026-10-01")
+
+    assert_includes output, "Member with ID M9 not found! Unable to borrow."
+    refute_includes output, "Book borrowed by"
+  end
 end
