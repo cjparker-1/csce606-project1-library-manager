@@ -1,3 +1,5 @@
+require_relative "library_member"
+
 class Book
   attr_accessor :title, :book_id, :author, :genre, :is_borrowed, :borrower, :return_date
 
@@ -229,7 +231,11 @@ if __FILE__ == $0
     puts "7 - Sort books by title"
     puts "8 - Filter books by genre"
     puts "9 - Track overdue books"
-    puts "10 - Exit"
+    puts "10 - Add a member"
+    puts "11 - Find a member"
+    puts "12 - List all members"
+    puts "13 - Remove a member"
+    puts "14 - Exit"
 
     print "Enter your choice: "
     response = gets.chomp
@@ -299,6 +305,56 @@ if __FILE__ == $0
       library.track_overdue_books(current_date)
 
     elsif response == "10"
+      print "Enter Member ID: "
+      member_id = gets.chomp
+
+      print "Enter Member Name: "
+      name = gets.chomp
+
+      begin
+        member = LibraryMember.new(member_id, name)
+        library.add_member(member)
+        puts "Member added! #{name}"
+      rescue ArgumentError => e
+        puts e.message
+      end
+
+    elsif response == "11"
+      print "Enter Member ID: "
+      member_id = gets.chomp
+
+      member = library.find_member(member_id)
+
+      if member
+        puts "Member ID: #{member.member_id}, Name: #{member.name}"
+      else
+        puts "Member with ID #{member_id} not found!"
+      end
+
+    elsif response == "12"
+      members = library.list_members
+
+      if members.empty?
+        puts "No members found."
+      else
+        members.each do |member|
+          puts "Member ID: #{member.member_id}, Name: #{member.name}"
+        end
+      end
+
+    elsif response == "13"
+      print "Enter Member ID: "
+      member_id = gets.chomp
+
+      member = library.remove_member(member_id)
+
+      if member
+        puts "Member Removed! #{member.name}"
+      else
+        puts "Member with ID #{member_id} not found!"
+      end
+
+    elsif response == "14"
       puts "Thank you for visiting the Library!"
       break
 
