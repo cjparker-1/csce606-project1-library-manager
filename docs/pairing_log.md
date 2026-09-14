@@ -43,12 +43,20 @@ We discussed:
 We checked that the changes made sense and discussed any problems we noticed.
 
 ### Part 2
-Driver: Can Ercan
+Driver: Can Ercan  
 Navigator: Christopher Parker
 
-We switched roles so Can could work as the driver and Christopher could review and give feedback.
+We switched roles so Can could work as the driver while Christopher reviewed the code and provided feedback.
 
-We reviewed another small part of the project and discussed whether it matched the project requirements.
+We discussed:
+- borrowing and returning functionality
+- error handling
+- how member management connects with the book system
+- existing tests
+- project requirements
+- remaining work before submission
+
+We checked that the functionality worked correctly and that the changes matched the project requirements.
 
 ### Notes
 We communicated mainly through Discord text during the session. Both team members discussed the code and project decisions so that both understood the work being completed.
