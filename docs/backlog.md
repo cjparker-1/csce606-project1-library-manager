@@ -4,15 +4,11 @@ This is our task board. We move items down the list as work gets done.
 
 ## To Do
 
-- More sad-path tests
-- Coverage setup with SimpleCov
-- RuboCop setup and check
 - `docs/pairing_log.md`
 - `docs/retrospective.md`
 
 ## In Progress
 
-- More automated tests
 - Documentation
 
 ## Done
@@ -37,3 +33,7 @@ This is our task board. We move items down the list as work gets done.
 - README
 - Design document
 - Borrowing and returning connected to `LibraryMember`
+- Unit tests for `Book` and `Library`
+- Sad-path tests (unknown IDs, blank input, duplicate IDs, already borrowed)
+- Coverage setup with SimpleCov (about 93% line coverage)
+- RuboCop setup and check (no offenses)

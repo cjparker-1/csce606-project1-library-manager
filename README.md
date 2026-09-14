@@ -17,7 +17,13 @@ Check your Ruby version:
 ruby -v
 ```
 
-The tests use Minitest and Rake. Both come with Ruby, so there is nothing else to install right now.
+Minitest and Rake come with Ruby. SimpleCov and RuboCop are listed in the `Gemfile`. Install them with:
+
+```
+bundle install
+```
+
+On a Mac with the built-in Ruby, `bundle install` may ask for sudo. We installed the gems for our user instead with `gem install <gem> --user-install`.
 
 Clone the repository and go into the folder:
 
@@ -48,7 +54,23 @@ ruby test/library_member_test.rb
 
 ## Coverage
 
-Coverage setup is planned but not added yet. We plan to use SimpleCov. This section will be updated with the command and instructions after SimpleCov is added.
+Coverage uses SimpleCov and runs automatically with the tests:
+
+```
+rake test
+```
+
+The last line of the output shows the line coverage. It is currently about 93%. A full report is written to `coverage/index.html`, which you can open in a browser. The `coverage/` folder is not committed.
+
+## Code style
+
+We use RuboCop. Run it with:
+
+```
+bundle exec rubocop
+```
+
+The settings are in `.rubocop.yml`. RuboCop currently reports no offenses.
 
 ## Main features
 
@@ -67,7 +89,6 @@ Coverage setup is planned but not added yet. We plan to use SimpleCov. This sect
 
 - Data is stored only in memory and is lost when the program exits.
 - Input validation is still being improved.
-- Coverage and RuboCop setup are not finished yet.
 
 ## Project documents
 
