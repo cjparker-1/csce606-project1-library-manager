@@ -57,7 +57,7 @@ Acceptance criteria:
 - If the book is borrowed, it becomes Available and the borrower and return date are cleared.
 - If the book is not borrowed, the program says it is already in the system.
 
-## 6. Manage library members (Planned)
+## 6. Manage library members
 
 As a librarian, I want to add, look up, and remove library members so that I can keep track of who uses the library.
 

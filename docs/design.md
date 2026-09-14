@@ -50,7 +50,9 @@ Everything lives in memory. There is no file or database. When the program exits
 - `Library` owns the `Book` and `LibraryMember` objects. It looks them up by ID and calls their methods.
 - `LibraryMember` holds `Book` objects in its borrowed list.
 
-Right now the menu only uses the book methods. The member methods exist in `Library` and are tested, but they are not connected to the menu yet. Borrowing still records a borrower name as plain text instead of a `LibraryMember`. Connecting these is on the backlog.
+Menu options 10 to 13 handle members. "Add a member" builds a `LibraryMember` and passes it to `Library`. If the ID or name is blank, or the ID is already taken, the menu catches the `ArgumentError` and prints the message instead of crashing.
+
+Borrowing still records a borrower name as plain text instead of a `LibraryMember`. Connecting borrowing to members is on the backlog.
 
 ## 4. User Interface Design
 
@@ -75,7 +77,11 @@ Welcome To Library:
 7 - Sort books by title
 8 - Filter books by genre
 9 - Track overdue books
-10 - Exit
+10 - Add a member
+11 - Find a member
+12 - List all members
+13 - Remove a member
+14 - Exit
 Enter your choice:
 ```
 
@@ -86,7 +92,7 @@ Basic workflow:
 3. The user types a number and presses Enter.
 4. The program asks for any information it needs, one line at a time. For example, "Borrow a book" asks for a book ID, a borrower name, and a return date.
 5. The action runs and prints a short result message.
-6. The menu appears again. This repeats until the user picks 10 - Exit.
+6. The menu appears again. This repeats until the user picks 14 - Exit.
 
 If the user types a number that is not on the menu, the program prints "Invalid choice!" and shows the menu again.
 

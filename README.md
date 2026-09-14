@@ -1,6 +1,6 @@
 # Library Management System
 
-A small Ruby command-line library management app for adding, removing, searching, borrowing, and returning books. Member management is also being added.
+A small Ruby command-line library management app for adding, removing, searching, borrowing, and returning books. It also has basic member management.
 
 ## Team
 
@@ -32,7 +32,7 @@ cd csce606-project1-library-manager
 ruby Project_1.rb
 ```
 
-A numbered menu appears. Type the number of the option you want and press Enter. Pick `10` to exit.
+A numbered menu appears. Type the number of the option you want and press Enter. Pick `14` to exit.
 
 ## Running the tests
 
@@ -66,7 +66,6 @@ Coverage setup is planned but not added yet. We plan to use SimpleCov. This sect
 ## Known limitations
 
 - Data is stored only in memory and is lost when the program exits.
-- Member management is not connected to the menu yet.
 - Borrowing still uses a borrower name instead of a `LibraryMember`.
 - Input validation is still being improved.
 - Coverage and RuboCop setup are not finished yet.

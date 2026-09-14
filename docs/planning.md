@@ -19,7 +19,7 @@ These are the core features from our proposal. The app is not done without them.
 - Search books
 - Borrow (check out) books
 - Return books
-- Member management (being added now)
+- Basic member management (add, find, list, remove)
 
 ## Optional / stretch features
 
