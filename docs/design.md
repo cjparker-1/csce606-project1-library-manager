@@ -52,7 +52,7 @@ Everything lives in memory. There is no file or database. When the program exits
 
 Menu options 10 to 13 handle members. "Add a member" builds a `LibraryMember` and passes it to `Library`. If the ID or name is blank, or the ID is already taken, the menu catches the `ArgumentError` and prints the message instead of crashing.
 
-Borrowing still records a borrower name as plain text instead of a `LibraryMember`. Connecting borrowing to members is on the backlog.
+Borrowing uses a member ID. "Borrow a book" looks up the member and the book, marks the book borrowed with the member's name and return date, and adds the book to that member's borrowed list. "Return a book" marks the book available again and removes it from the member who had it. If the member ID or book ID is unknown, or the book is already out, the program prints a message and nothing changes.
 
 ## 4. User Interface Design
 
@@ -90,7 +90,7 @@ Basic workflow:
 1. The user runs `ruby Project_1.rb`.
 2. The menu appears.
 3. The user types a number and presses Enter.
-4. The program asks for any information it needs, one line at a time. For example, "Borrow a book" asks for a book ID, a borrower name, and a return date.
+4. The program asks for any information it needs, one line at a time. For example, "Borrow a book" asks for a book ID, a member ID, and a return date.
 5. The action runs and prints a short result message.
 6. The menu appears again. This repeats until the user picks 14 - Exit.
 

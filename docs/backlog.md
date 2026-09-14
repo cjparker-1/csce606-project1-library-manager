@@ -4,7 +4,6 @@ This is our task board. We move items down the list as work gets done.
 
 ## To Do
 
-- Connect borrowing to `LibraryMember`
 - More sad-path tests
 - Coverage setup with SimpleCov
 - RuboCop setup and check
@@ -37,3 +36,4 @@ This is our task board. We move items down the list as work gets done.
 - Acceptance tests for the member menu
 - README
 - Design document
+- Borrowing and returning connected to `LibraryMember`

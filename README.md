@@ -66,7 +66,6 @@ Coverage setup is planned but not added yet. We plan to use SimpleCov. This sect
 ## Known limitations
 
 - Data is stored only in memory and is lost when the program exits.
-- Borrowing still uses a borrower name instead of a `LibraryMember`.
 - Input validation is still being improved.
 - Coverage and RuboCop setup are not finished yet.
 
