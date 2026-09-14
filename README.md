@@ -2,6 +2,39 @@
 
 A small Ruby command-line library management app for adding, removing, searching, borrowing, and returning books. It also has basic member management.
 
+## Project structure
+
+csce606-project1-library-manager/
+├── docs/
+│   ├── backlog.md
+│   ├── design.md
+│   ├── pairing_log.md
+│   ├── planning.md
+│   ├── retrospective.md
+│   └── user_stories.md
+│
+├── test/
+│   ├── book_test.rb
+│   ├── library_books_test.rb
+│   ├── library_borrow_test.rb
+│   ├── library_member_test.rb
+│   ├── library_members_test.rb
+│   ├── member_menu_test.rb
+│   ├── run_with_coverage.rb
+│   ├── smoke_test.rb
+│   └── test_helper.rb
+│
+├── Project_1.rb
+├── library_member.rb
+├── README.md
+├── Rakefile
+├── Gemfile
+├── Gemfile.lock
+├── .rubocop.yml
+├── .simplecov
+└── .gitignore
+
+
 ## Team
 
 - Christopher Parker
@@ -96,3 +129,5 @@ The settings are in `.rubocop.yml`. RuboCop currently reports no offenses.
 - `docs/planning.md`
 - `docs/design.md`
 - `docs/backlog.md`
+- `docs/pairing_log.md`
+- `docs/retrospective.md`
