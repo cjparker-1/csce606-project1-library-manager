@@ -120,6 +120,22 @@ The settings are in `.rubocop.yml`. RuboCop currently reports no offenses.
 - Track overdue books
 - Basic member management
 
+
+### Test structure
+
+The `test/` folder contains automated tests for the main features of the application.
+
+- `book_test.rb` - Tests book availability, borrowing, returning, string output, and genre updates.
+- `library_books_test.rb` - Tests adding, removing, displaying, searching, sorting, filtering, and overdue book tracking.
+- `library_borrow_test.rb` - Tests borrowing and returning books through the library, including invalid members, invalid books, already borrowed books, and invalid returns.
+- `library_member_test.rb` - Tests member creation, borrowed book tracking, and validation for blank or invalid member information.
+- `library_members_test.rb` - Tests adding, finding, listing, removing, and preventing duplicate members.
+- `member_menu_test.rb` - Tests the real command-line member workflow, including adding, finding, listing, removing, borrowing, returning, duplicate members, blank member IDs, and unknown members.
+- `run_with_coverage.rb` - Runs the real command-line application with SimpleCov enabled so menu interactions are included in coverage.
+- `smoke_test.rb` - Confirms that the main project file loads correctly and that the `Book` and `Library` classes are available.
+- `test_helper.rb` - Sets up SimpleCov and Minitest and loads the main application for the test suite.
+  
+
 ## Known limitations
 
 - Data is stored only in memory and is lost when the program exits.
