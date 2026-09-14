@@ -4,6 +4,7 @@ A small Ruby command-line library management app for adding, removing, searching
 
 ## Project structure
 
+```
 csce606-project1-library-manager/
 ├── docs/
 │   ├── backlog.md
@@ -33,6 +34,7 @@ csce606-project1-library-manager/
 ├── .rubocop.yml
 ├── .simplecov
 └── .gitignore
+```
 
 
 ## Team
