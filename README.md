@@ -11,6 +11,7 @@ csce606-project1-library-manager/
 │   ├── design.md
 │   ├── pairing_log.md
 │   ├── planning.md
+|   |── proposal.md
 │   ├── retrospective.md
 │   └── user_stories.md
 │
