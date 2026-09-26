@@ -108,6 +108,12 @@ bundle exec rubocop
 
 The settings are in `.rubocop.yml`. RuboCop currently reports no offenses.
 
+If `bundle exec rubocop` says the command was not found, the user gem folder is not on your PATH. Run it like this instead:
+
+```
+PATH="$HOME/.gem/ruby/2.6.0/bin:$PATH" bundle exec rubocop
+```
+
 ## Main features
 
 - Add books
@@ -140,7 +146,8 @@ The `test/` folder contains automated tests for the main features of the applica
 ## Known limitations
 
 - Data is stored only in memory and is lost when the program exits.
-- Input validation is still being improved.
+- Book input is not validated. Blank titles and duplicate book IDs are accepted.
+- Member input is validated. Blank IDs, blank names, and duplicate IDs are rejected with a message.
 
 ## Project documents
 

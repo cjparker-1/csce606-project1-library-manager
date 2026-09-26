@@ -14,8 +14,9 @@ library_member.rb
   LibraryMember   - one member and the books they have borrowed
 
 test/
-  test_helper.rb  - loads minitest and Project_1.rb
-  *_test.rb       - unit tests
+  test_helper.rb  - loads SimpleCov, minitest, and Project_1.rb
+  run_with_coverage.rb - starts the program with coverage on for the menu tests
+  *_test.rb       - unit tests and menu acceptance tests
 ```
 
 Everything lives in memory. There is no file or database. When the program exits, the books and members are gone.
@@ -29,7 +30,7 @@ Everything lives in memory. There is no file or database. When the program exits
 
 **Library** (`Project_1.rb`)
 - Keeps a list of `Book` objects and a list of `LibraryMember` objects.
-- Book methods: add, remove, display, search by title, borrow, return, sort by title, filter by genre, track overdue.
+- Book methods: add, remove, display, search by title, find by ID, borrow, return, sort by title, filter by genre, track overdue.
 - Member methods: add, find by ID, remove by ID, list.
 
 **LibraryMember** (`library_member.rb`)
@@ -100,7 +101,7 @@ If the user types a number that is not on the menu, the program prints "Invalid 
 
 - **Command-line interface.** The project requires a terminal app, so there is no GUI or web page. This keeps the code small and easy to test.
 - **Member code in its own file.** `LibraryMember` lives in `library_member.rb`. This keeps it easy to find, test, and read, and it keeps the member work separate from the original book code.
-- **`Project_1.rb` stays in place.** The original `Book`, `Library`, and menu structure stays in place instead of being rewritten. New code is added next to it. The only change to the original structure was wrapping the menu in a run guard so tests can load the file without starting the menu.
-- **Logic separate from printing when possible.** The original book methods print their own messages. The newer member methods return values instead and leave printing to the menu. This makes them easier to test. We did not go back and change the book methods, so the two styles both exist for now.
+- **`Project_1.rb` stays in place.** The original `Book`, `Library`, and menu structure stays in place instead of being rewritten. New code is added next to it. The first change to the original structure was wrapping the menu in a run guard so tests can load the file without starting the menu. Later we changed `borrow_book` and `return_book` so they work with members, and made small style fixes for RuboCop.
+- **Logic separate from printing when possible.** The original book methods print their own messages. The newer member methods return values instead and leave printing to the menu. This makes them easier to test. We did not go back and change the book methods, so the two styles both exist.
 - **Simple arrays.** Books and members are stored in plain Ruby arrays. Lookups walk the array. This is slow for a huge library but fine for a small student project, and it keeps the code easy to follow.
 - **No saving to disk.** Data lives only while the program runs. Saving to a file would be a nice feature but was not required.

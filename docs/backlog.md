@@ -8,7 +8,7 @@ This is our task board. We move items down the list as work gets done.
 
 ## In Progress
 
-- Final documentation review
+- Nothing right now.
 
 ## Done
 
@@ -43,3 +43,4 @@ This is our task board. We move items down the list as work gets done.
 - README
 - Pairing log
 - Retrospective
+- Final documentation review

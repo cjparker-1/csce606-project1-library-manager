@@ -61,3 +61,10 @@ The project is done when:
 - Both team members have commits in the repository.
 - The app runs from the command line with `ruby Project_1.rb`.
 - The project is ready to hand in as the team deliverable.
+
+## Final status
+
+- All essential features work and have tests.
+- The stretch features (due dates, overdue tracking, genre filter) were kept and have tests.
+- All 57 tests pass with `rake test`. Line coverage is about 93%. RuboCop reports no offenses.
+- All required docs exist: user stories, pairing log, design, backlog, planning, retrospective, and README.

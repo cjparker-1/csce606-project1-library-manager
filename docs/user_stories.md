@@ -43,8 +43,9 @@ As a librarian, I want to check out a book to a borrower so that we know who has
 
 Acceptance criteria:
 - The menu has a "Borrow a book" option.
-- The program asks for a book ID, borrower name, and return date.
-- If the book is available, it becomes Borrowed and stores the borrower and return date.
+- The program asks for a book ID, a member ID, and a return date.
+- If the book is available and the member exists, it becomes Borrowed and stores the member's name and return date.
+- The book is added to that member's borrowed list.
 - The borrowed book shows the borrower and return date when listed.
 
 ## 5. Return a book (Essential)
@@ -56,6 +57,7 @@ Acceptance criteria:
 - The program asks for a book ID.
 - If the book is borrowed, it becomes Available and the borrower and return date are cleared.
 - If the book is not borrowed, the program says it is already in the system.
+- If the ID does not match a book, the program says the book was not found.
 
 ## 6. Manage library members
 
@@ -68,6 +70,7 @@ Acceptance criteria:
 - A member can be removed by member ID.
 - The library can list all current members.
 - Looking up or removing an unknown member ID does not crash the program.
+- A member ID or name cannot be blank, and a member ID cannot be used twice. The program shows a message instead of crashing.
 
 ## 7. Borrow a book that is not available (Sad path)
 
@@ -75,6 +78,7 @@ As a librarian, I want a clear message when a book cannot be borrowed so that I 
 
 Acceptance criteria:
 - If the book ID does not exist, the program says the book was not found and it cannot be borrowed.
+- If the member ID does not exist, the program says the member was not found and it cannot be borrowed.
 - If the book is already borrowed, the program says it is already taken out.
-- In both cases the book's borrower and return date do not change.
+- In all cases the book's borrower and return date do not change.
 - The program returns to the menu instead of crashing.
