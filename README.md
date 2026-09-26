@@ -11,7 +11,7 @@ csce606-project1-library-manager/
 │   ├── design.md
 │   ├── pairing_log.md
 │   ├── planning.md
-|   |── proposal.md
+│   ├── proposal.md
 │   ├── retrospective.md
 │   └── user_stories.md
 │
@@ -127,8 +127,7 @@ PATH="$HOME/.gem/ruby/2.6.0/bin:$PATH" bundle exec rubocop
 - Track overdue books
 - Basic member management
 
-
-### Test structure
+## Test structure
 
 The `test/` folder contains automated tests for the main features of the application.
 
@@ -141,7 +140,6 @@ The `test/` folder contains automated tests for the main features of the applica
 - `run_with_coverage.rb` - Runs the real command-line application with SimpleCov enabled so menu interactions are included in coverage.
 - `smoke_test.rb` - Confirms that the main project file loads correctly and that the `Book` and `Library` classes are available.
 - `test_helper.rb` - Sets up SimpleCov and Minitest and loads the main application for the test suite.
-  
 
 ## Known limitations
 
@@ -157,3 +155,4 @@ The `test/` folder contains automated tests for the main features of the applica
 - `docs/backlog.md`
 - `docs/pairing_log.md`
 - `docs/retrospective.md`
+- `docs/proposal.md`

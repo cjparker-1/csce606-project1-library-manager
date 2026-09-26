@@ -4,7 +4,7 @@ This is our task board. We move items down the list as work gets done.
 
 ## To Do
 
-- Final project review before submission
+- Nothing left before submission.
 
 ## In Progress
 
@@ -44,3 +44,4 @@ This is our task board. We move items down the list as work gets done.
 - Pairing log
 - Retrospective
 - Final documentation review
+- Final project review before submission
