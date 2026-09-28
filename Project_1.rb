@@ -72,6 +72,15 @@ module TerminalUI
     gets.chomp
   end
 
+  def prompt_date(label)
+    loop do
+      value = prompt("#{label} (YYYY-MM-DD, e.g. 2026-10-01): ")
+      return value if value =~ /\A\d{4}-\d{2}-\d{2}\z/
+
+      error_msg("That date is not in YYYY-MM-DD format. Please try again.")
+    end
+  end
+
   def clear_screen
     print "\e[H\e[2J" if INTERACTIVE
   end
@@ -361,7 +370,7 @@ if __FILE__ == $PROGRAM_NAME
     elsif response == "5"
       book_id = TerminalUI.prompt("Enter Book ID: ")
       member_id = TerminalUI.prompt("Enter Member ID: ")
-      return_date = TerminalUI.prompt("Please Enter Return Date: ")
+      return_date = TerminalUI.prompt_date("Please Enter Return Date")
 
       library.borrow_book(book_id, member_id, return_date)
 
@@ -379,7 +388,7 @@ if __FILE__ == $PROGRAM_NAME
       library.filter_books_by_genre(filter_genre)
 
     elsif response == "9"
-      current_date = TerminalUI.prompt("Please Enter Current Date to Track Overdues: ")
+      current_date = TerminalUI.prompt_date("Please Enter Current Date to Track Overdues")
 
       library.track_overdue_books(current_date)
 
