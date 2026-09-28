@@ -1,5 +1,77 @@
 require_relative "library_member"
 
+module TerminalUI
+  COLOR_ENABLED = $stdout.respond_to?(:tty?) && $stdout.tty? && ENV["NO_COLOR"].nil?
+
+  CODES = {
+    reset: "\e[0m",
+    bold: "\e[1m",
+    dim: "\e[2m",
+    red: "\e[31m",
+    green: "\e[32m",
+    yellow: "\e[33m",
+    blue: "\e[34m",
+    magenta: "\e[35m",
+    cyan: "\e[36m"
+  }.freeze
+
+  module_function
+
+  def colorize(text, *styles)
+    return text unless COLOR_ENABLED
+
+    "#{styles.map { |style| CODES.fetch(style) }.join}#{text}#{CODES[:reset]}"
+  end
+
+  def success(text)
+    puts colorize(text, :green)
+  end
+
+  def warn_msg(text)
+    puts colorize(text, :yellow)
+  end
+
+  def error_msg(text)
+    puts colorize(text, :red)
+  end
+
+  def info(text)
+    puts colorize(text, :cyan)
+  end
+
+  def heading(text)
+    puts colorize(text, :bold, :blue)
+  end
+
+  def divider(char = "-", width = 60)
+    puts colorize(char * width, :dim)
+  end
+
+  def banner(title)
+    width = title.length + 8
+    top = "+#{'-' * width}+"
+
+    puts colorize(top, :magenta)
+    puts colorize("|#{title.center(width)}|", :bold, :magenta)
+    puts colorize(top, :magenta)
+  end
+
+  def menu_section(title, options)
+    puts colorize(title, :bold, :blue)
+
+    options.each do |number, text|
+      puts "  #{colorize(number.to_s.rjust(2), :cyan)}  #{text}"
+    end
+
+    puts
+  end
+
+  def prompt(text)
+    print "#{colorize('>', :cyan)} #{text}"
+    gets.chomp
+  end
+end
+
 class Book
   attr_accessor :title, :book_id, :author, :genre, :is_borrowed, :borrower, :return_date
 
@@ -27,25 +99,25 @@ class Book
 
   def borrow_book(borrower_name, return_date)
     if !@is_borrowed
-      puts "Book borrowed by #{borrower_name} and return date is: #{return_date}"
+      TerminalUI.success("Book borrowed by #{borrower_name} and return date is: #{return_date}")
 
       @borrower = borrower_name
       @return_date = return_date
       @is_borrowed = true
     else
-      puts "Book is already taken out!"
+      TerminalUI.error_msg("Book is already taken out!")
     end
   end
 
   def return_book
     if @is_borrowed
-      puts "Book has been returned!"
+      TerminalUI.success("Book has been returned!")
 
       @is_borrowed = false
       @borrower = nil
       @return_date = nil
     else
-      puts "Book is already in the system!"
+      TerminalUI.warn_msg("Book is already in the system!")
     end
   end
 
@@ -53,7 +125,7 @@ class Book
     old_genre = @genre
     @genre = new_genre
 
-    puts "Genre changed! Old Genre: #{old_genre} to #{new_genre}"
+    TerminalUI.info("Genre changed! Old Genre: #{old_genre} to #{new_genre}")
   end
 end
 
@@ -65,7 +137,7 @@ class Library
 
   def add_book(book)
     @book_list << book
-    puts "#{book} added to System!"
+    TerminalUI.success("#{book} added to System!")
   end
 
   def remove_book(book_id)
@@ -74,19 +146,24 @@ class Library
     for book in @book_list
       if book.book_id == book_id
         @book_list.delete(book)
-        puts "Book Removed! #{book.title}"
+        TerminalUI.success("Book Removed! #{book.title}")
         found = true
         break
       end
     end
 
-    puts "Book with ID #{book_id} not found!" unless found
+    TerminalUI.error_msg("Book with ID #{book_id} not found!") unless found
   end
 
   def display_books
     for book in @book_list
-      puts "Title: #{book.title}, ID: #{book.book_id}, Author: #{book.author}, Genre: #{book.genre}"
+      status = book.is_borrowed ? TerminalUI.colorize("Borrowed", :yellow) : TerminalUI.colorize("Available", :green)
+      puts "Title: #{book.title}, ID: #{book.book_id}, Author: #{book.author}, Genre: #{book.genre} [#{status}]"
     end
+  end
+
+  def books
+    @book_list.dup
   end
 
   def search_book(title)
@@ -94,13 +171,13 @@ class Library
 
     for book in @book_list
       if book.title == title
-        puts "Title: #{book.title}, Book Found!"
+        TerminalUI.success("Title: #{book.title}, Book Found!")
         found = true
         break
       end
     end
 
-    puts "Book with title '#{title}' not found!" unless found
+    TerminalUI.error_msg("Book with title '#{title}' not found!") unless found
   end
 
   def find_book(book_id)
@@ -112,11 +189,11 @@ class Library
     book = find_book(book_id)
 
     if member.nil?
-      puts "Member with ID #{member_id} not found! Unable to borrow."
+      TerminalUI.error_msg("Member with ID #{member_id} not found! Unable to borrow.")
     elsif book.nil?
-      puts "Book with ID #{book_id} not found! Unable to borrow."
+      TerminalUI.error_msg("Book with ID #{book_id} not found! Unable to borrow.")
     elsif book.is_borrowed
-      puts "Book is already taken out!"
+      TerminalUI.error_msg("Book is already taken out!")
     else
       book.borrow_book(member.name, return_date)
       member.add_borrowed_book(book)
@@ -127,7 +204,7 @@ class Library
     book = find_book(book_id)
 
     if book.nil?
-      puts "Book with ID #{book_id} not found! Unable to return."
+      TerminalUI.error_msg("Book with ID #{book_id} not found! Unable to return.")
       return
     end
 
@@ -139,10 +216,10 @@ class Library
   def sort_books_by_title
     @book_list.sort_by!(&:title)
 
-    puts "Books are sorted!"
+    TerminalUI.success("Books are sorted!")
 
     for book in @book_list
-      puts book
+      puts TerminalUI.colorize(book.to_s, :cyan)
     end
   end
 
@@ -154,13 +231,13 @@ class Library
     end
 
     if filtered_list.any?
-      puts "Books in Genre: #{genre}"
+      TerminalUI.heading("Books in Genre: #{genre}")
 
       for book in filtered_list
-        puts book
+        puts TerminalUI.colorize(book.to_s, :cyan)
       end
     else
-      puts "No books found in #{genre}"
+      TerminalUI.warn_msg("No books found in #{genre}")
     end
   end
 
@@ -172,13 +249,13 @@ class Library
     end
 
     if overdue_list.any?
-      puts "Overdue Books:"
+      TerminalUI.heading("Overdue Books:")
 
       for book in overdue_list
-        puts "Title: #{book.title}, Borrower: #{book.borrower}, Due Date: #{book.return_date}"
+        TerminalUI.warn_msg("Title: #{book.title}, Borrower: #{book.borrower}, Due Date: #{book.return_date}")
       end
     else
-      puts "No overdue books found."
+      TerminalUI.success("No overdue books found.")
     end
   end
 
@@ -202,76 +279,82 @@ class Library
   end
 end
 
+BOOK_MENU = [
+  [1, "Add a book"],
+  [2, "Remove a book"],
+  [3, "View all books"],
+  [4, "Search for a book"],
+  [5, "Borrow a book"],
+  [6, "Return a book"],
+  [7, "Sort books by title"],
+  [8, "Filter books by genre"],
+  [9, "Track overdue books"]
+].freeze
+
+MEMBER_MENU = [
+  [10, "Add a member"],
+  [11, "Find a member"],
+  [12, "List all members"],
+  [13, "Remove a member"]
+].freeze
+
+SYSTEM_MENU = [[14, "Exit"]].freeze
+
+def print_menu
+  TerminalUI.divider("=")
+  TerminalUI.menu_section("BOOKS", BOOK_MENU)
+  TerminalUI.menu_section("MEMBERS", MEMBER_MENU)
+  TerminalUI.menu_section("SYSTEM", SYSTEM_MENU)
+end
+
 if __FILE__ == $PROGRAM_NAME
   library = Library.new
 
+  TerminalUI.banner("LIBRARY MANAGEMENT SYSTEM")
+
   while true
     puts
-    puts "Welcome To Library:"
-    puts "1 - Add a book"
-    puts "2 - Remove a book"
-    puts "3 - View all books"
-    puts "4 - Search for a book"
-    puts "5 - Borrow a book"
-    puts "6 - Return a book"
-    puts "7 - Sort books by title"
-    puts "8 - Filter books by genre"
-    puts "9 - Track overdue books"
-    puts "10 - Add a member"
-    puts "11 - Find a member"
-    puts "12 - List all members"
-    puts "13 - Remove a member"
-    puts "14 - Exit"
+    print_menu
 
-    print "Enter your choice: "
-    response = gets.chomp
+    response = TerminalUI.prompt("Enter your choice: ")
+    TerminalUI.divider
 
     if response == "1"
-      print "Enter Book Title: "
-      title = gets.chomp
-
-      print "Enter Book ID: "
-      book_id = gets.chomp
-
-      print "Enter Author Name: "
-      author = gets.chomp
-
-      print "Enter Book Genre: "
-      genre = gets.chomp
+      title = TerminalUI.prompt("Enter Book Title: ")
+      book_id = TerminalUI.prompt("Enter Book ID: ")
+      author = TerminalUI.prompt("Enter Author Name: ")
+      genre = TerminalUI.prompt("Enter Book Genre: ")
 
       book = Book.new(title, book_id, author, genre)
       library.add_book(book)
 
     elsif response == "2"
-      print "Enter Book ID: "
-      book_id = gets.chomp
+      book_id = TerminalUI.prompt("Enter Book ID: ")
 
       library.remove_book(book_id)
 
     elsif response == "3"
-      library.display_books
+      if library.books.empty?
+        TerminalUI.warn_msg("No books in the library yet.")
+      else
+        TerminalUI.heading("All Books")
+        library.display_books
+      end
 
     elsif response == "4"
-      print "Enter Book Title: "
-      title = gets.chomp
+      title = TerminalUI.prompt("Enter Book Title: ")
 
       library.search_book(title)
 
     elsif response == "5"
-      print "Enter Book ID: "
-      book_id = gets.chomp
-
-      print "Enter Member ID: "
-      member_id = gets.chomp
-
-      print "Please Enter Return Date: "
-      return_date = gets.chomp
+      book_id = TerminalUI.prompt("Enter Book ID: ")
+      member_id = TerminalUI.prompt("Enter Member ID: ")
+      return_date = TerminalUI.prompt("Please Enter Return Date: ")
 
       library.borrow_book(book_id, member_id, return_date)
 
     elsif response == "6"
-      print "Enter Book ID: "
-      book_id = gets.chomp
+      book_id = TerminalUI.prompt("Enter Book ID: ")
 
       library.return_book(book_id)
 
@@ -279,73 +362,67 @@ if __FILE__ == $PROGRAM_NAME
       library.sort_books_by_title
 
     elsif response == "8"
-      print "Enter Book Genre for Filtering: "
-      filter_genre = gets.chomp
+      filter_genre = TerminalUI.prompt("Enter Book Genre for Filtering: ")
 
       library.filter_books_by_genre(filter_genre)
 
     elsif response == "9"
-      print "Please Enter Current Date to Track Overdues: "
-      current_date = gets.chomp
+      current_date = TerminalUI.prompt("Please Enter Current Date to Track Overdues: ")
 
       library.track_overdue_books(current_date)
 
     elsif response == "10"
-      print "Enter Member ID: "
-      member_id = gets.chomp
-
-      print "Enter Member Name: "
-      name = gets.chomp
+      member_id = TerminalUI.prompt("Enter Member ID: ")
+      name = TerminalUI.prompt("Enter Member Name: ")
 
       begin
         member = LibraryMember.new(member_id, name)
         library.add_member(member)
-        puts "Member added! #{name}"
+        TerminalUI.success("Member added! #{name}")
       rescue ArgumentError => e
-        puts e.message
+        TerminalUI.error_msg(e.message)
       end
 
     elsif response == "11"
-      print "Enter Member ID: "
-      member_id = gets.chomp
+      member_id = TerminalUI.prompt("Enter Member ID: ")
 
       member = library.find_member(member_id)
 
       if member
-        puts "Member ID: #{member.member_id}, Name: #{member.name}"
+        TerminalUI.info("Member ID: #{member.member_id}, Name: #{member.name}")
       else
-        puts "Member with ID #{member_id} not found!"
+        TerminalUI.error_msg("Member with ID #{member_id} not found!")
       end
 
     elsif response == "12"
       members = library.list_members
 
       if members.empty?
-        puts "No members found."
+        TerminalUI.warn_msg("No members found.")
       else
+        TerminalUI.heading("All Members")
         members.each do |library_member|
-          puts "Member ID: #{library_member.member_id}, Name: #{library_member.name}"
+          TerminalUI.info("Member ID: #{library_member.member_id}, Name: #{library_member.name}")
         end
       end
 
     elsif response == "13"
-      print "Enter Member ID: "
-      member_id = gets.chomp
+      member_id = TerminalUI.prompt("Enter Member ID: ")
 
       member = library.remove_member(member_id)
 
       if member
-        puts "Member Removed! #{member.name}"
+        TerminalUI.success("Member Removed! #{member.name}")
       else
-        puts "Member with ID #{member_id} not found!"
+        TerminalUI.error_msg("Member with ID #{member_id} not found!")
       end
 
     elsif response == "14"
-      puts "Thank you for visiting the Library!"
+      TerminalUI.success("Thank you for visiting the Library!")
       break
 
     else
-      puts "Invalid choice!"
+      TerminalUI.error_msg("Invalid choice!")
     end
   end
 end
