@@ -2,6 +2,7 @@ require_relative "library_member"
 
 module TerminalUI
   COLOR_ENABLED = $stdout.respond_to?(:tty?) && $stdout.tty? && ENV["NO_COLOR"].nil?
+  INTERACTIVE = COLOR_ENABLED && $stdin.respond_to?(:tty?) && $stdin.tty?
 
   CODES = {
     reset: "\e[0m",
@@ -69,6 +70,17 @@ module TerminalUI
   def prompt(text)
     print "#{colorize('>', :cyan)} #{text}"
     gets.chomp
+  end
+
+  def clear_screen
+    print "\e[H\e[2J" if INTERACTIVE
+  end
+
+  def pause(text = "Press Enter to return to the menu...")
+    return unless INTERACTIVE
+
+    print colorize("\n#{text}", :dim)
+    gets
   end
 end
 
@@ -310,9 +322,9 @@ end
 if __FILE__ == $PROGRAM_NAME
   library = Library.new
 
-  TerminalUI.banner("LIBRARY MANAGEMENT SYSTEM")
-
   while true
+    TerminalUI.clear_screen
+    TerminalUI.banner("LIBRARY MANAGEMENT SYSTEM")
     puts
     print_menu
 
@@ -424,5 +436,7 @@ if __FILE__ == $PROGRAM_NAME
     else
       TerminalUI.error_msg("Invalid choice!")
     end
+
+    TerminalUI.pause
   end
 end
