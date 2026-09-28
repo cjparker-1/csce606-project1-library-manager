@@ -1,3 +1,4 @@
+require "date"
 require_relative "library_member"
 
 module TerminalUI
@@ -263,17 +264,18 @@ class Library
   end
 
   def track_overdue_books(current_date)
+    today = Date.parse(current_date)
     overdue_list = []
 
     for book in @book_list
-      overdue_list << book if book.return_date && book.return_date < current_date
+      overdue_list << book if book.return_date && Date.parse(book.return_date) < today
     end
 
     if overdue_list.any?
       TerminalUI.heading("Overdue Books:")
 
       for book in overdue_list
-        TerminalUI.warn_msg("Title: #{book.title}, Borrower: #{book.borrower}, Due Date: #{book.return_date}")
+        TerminalUI.warn_msg(overdue_line(book, today))
       end
     else
       TerminalUI.success("No overdue books found.")
@@ -297,6 +299,13 @@ class Library
 
   def list_members
     @member_list
+  end
+
+  private
+
+  def overdue_line(book, today)
+    days_overdue = (today - Date.parse(book.return_date)).to_i
+    "Title: #{book.title}, Borrower: #{book.borrower}, Due Date: #{book.return_date}, Days Overdue: #{days_overdue}"
   end
 end
 
