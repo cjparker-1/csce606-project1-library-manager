@@ -76,10 +76,19 @@ module TerminalUI
   def prompt_date(label)
     loop do
       value = prompt("#{label} (YYYY-MM-DD, e.g. 2026-10-01): ")
-      return value if value =~ /\A\d{4}-\d{2}-\d{2}\z/
+      return value if valid_date?(value)
 
-      error_msg("That date is not in YYYY-MM-DD format. Please try again.")
+      error_msg("That is not a valid YYYY-MM-DD date. Please try again.")
     end
+  end
+
+  def valid_date?(value)
+    return false unless value =~ /\A\d{4}-\d{2}-\d{2}\z/
+
+    Date.parse(value)
+    true
+  rescue ArgumentError
+    false
   end
 
   def clear_screen
